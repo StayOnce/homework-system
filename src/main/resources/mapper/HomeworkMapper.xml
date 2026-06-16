@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.chloe.homework.mapper.HomeworkMapper">
+
+    <insert id="insert">
+
+        insert into homework
+        (
+            title,
+            content,
+            course_id,
+            teacher_id,
+            publish_time,
+            deadline,
+            status
+        )
+        values
+            (
+                #{title},
+                #{content},
+                #{courseId},
+                #{teacherId},
+                #{publishTime},
+                #{deadline},
+                #{status}
+            )
+
+    </insert>
+
+    <select id="getHomeworkList"
+            resultType="com.chloe.homework.vo.HomeworkVO">
+
+        select
+            h.id,
+            h.title,
+            c.course_name,
+            u.real_name as teacher_name,
+            h.deadline,
+            h.status
+        from homework h
+                 left join course c
+                           on h.course_id = c.id
+                 left join user u
+                           on h.teacher_id = u.id
+        order by h.id desc
+
+    </select>
+
+    <select id="findById"
+            resultType="com.chloe.homework.entity.Homework">
+
+        select *
+        from homework
+        where id = #{id}
+
+    </select>
+
+
+</mapper>

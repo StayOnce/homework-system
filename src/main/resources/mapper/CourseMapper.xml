@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.chloe.homework.mapper.CourseMapper">
+
+    <select id="getCourseList"
+            resultType="com.chloe.homework.vo.CourseVO">
+
+        select
+            c.id,
+            c.course_name,
+            c.course_code,
+            u.real_name as teacher_name,
+            c.description
+        from course c
+                 left join user u
+                           on c.teacher_id = u.id
+
+        order by c.id desc
+
+    </select>
+
+    <insert id="insert">
+
+        insert into course
+        (
+            course_name,
+            course_code,
+            teacher_id,
+            description
+        )
+        values
+            (
+                #{courseName},
+                #{courseCode},
+                #{teacherId},
+                #{description}
+            )
+
+    </insert>
+
+    <select id="findByCode"
+            resultType="Course">
+
+        select *
+        from course
+        where course_code = #{courseCode}
+
+    </select>
+
+    <select id="getStatistics"
+            resultType="com.chloe.homework.vo.CourseStatisticsVO">
+
+        select
+
+            c.id as courseId,
+
+            c.course_name as courseName,
+
+            count(distinct uc.user_id) as studentCount,
+
+            count(distinct hs.student_id) as submitCount,
+
+            (
+                count(distinct uc.user_id)
+                    -
+                count(distinct hs.student_id)
+                ) as unSubmitCount,
+
+            round(avg(sr.score),2) as averageScore,
+
+            round(
+                    count(distinct hs.student_id)
+                        /
+                    count(distinct uc.user_id)
+                        *100,
+                    2
+            ) as completeRate
+
+        from course c
+
+                 left join user_course uc
+                           on c.id = uc.course_id
+
+                 left join homework h
+                           on c.id = h.course_id
+
+                 left join homework_submit hs
+                           on h.id = hs.homework_id
+
+                 left join score_record sr
+                           on hs.id = sr.submit_id
+
+        group by
+            c.id,
+            c.course_name
+
+        order by c.id
+
+    </select>
+</mapper>

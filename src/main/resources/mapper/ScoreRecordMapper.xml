@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.chloe.homework.mapper.ScoreRecordMapper">
+
+    <insert id="insert">
+
+        insert into score_record
+        (
+            submit_id,
+            score,
+            comment,
+            grade_time
+        )
+        values
+            (
+                #{submitId},
+                #{score},
+                #{comment},
+                #{gradeTime}
+            )
+
+    </insert>
+
+    <select id="findBySubmitId"
+            resultType="com.chloe.homework.entity.ScoreRecord">
+
+        select *
+        from score_record
+        where submit_id = #{submitId}
+
+    </select>
+
+    <select id="getMyScores"
+            resultType="com.chloe.homework.vo.ScoreVO">
+
+        select
+            hs.id as submitId,
+            h.title as homeworkTitle,
+            c.course_name as courseName,
+            sr.score as score,
+            sr.comment as comment,
+            sr.grade_time as gradeTime
+        from homework_submit hs
+
+                 left join homework h
+                           on hs.homework_id = h.id
+
+                 left join course c
+                           on h.course_id = c.id
+
+                 left join score_record sr
+                           on hs.id = sr.submit_id
+
+        where hs.student_id = #{studentId}
+
+        order by hs.id desc
+
+    </select>
+
+</mapper>

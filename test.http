@@ -1,0 +1,190 @@
+################################################
+# 1. 管理员登录
+################################################
+
+POST http://localhost:8080/auth/login
+Content-Type: application/json
+
+{
+  "username":"admin",
+  "password":"123456"
+}
+
+###
+
+################################################
+# 2. 教师登录（Bang Chan）
+################################################
+
+POST http://localhost:8080/auth/login
+Content-Type: application/json
+
+{
+  "username":"bangchan",
+  "password":"123456"
+}
+
+###
+
+################################################
+# 3. 学生登录（黄铉辰）
+################################################
+
+POST http://localhost:8080/auth/login
+Content-Type: application/json
+
+{
+  "username":"hyunjin",
+  "password":"123456"
+}
+
+###
+
+################################################
+# 4. 获取当前登录用户信息
+################################################
+
+GET http://localhost:8080/auth/info
+token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInVzZXJJZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzgxNTI5NTMwLCJleHAiOjE3ODE2MTU5MzB9.MdPf-QA9xIDD58dlxVKRHKRCHu5ebQ0xV3pjjAcQ_uY
+
+###
+
+################################################
+# 5. 新增课程
+################################################
+
+POST http://localhost:8080/course/add
+Content-Type: application/json
+token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInVzZXJJZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzgxNTI5NTMwLCJleHAiOjE3ODE2MTU5MzB9.MdPf-QA9xIDD58dlxVKRHKRCHu5ebQ0xV3pjjAcQ_uY
+
+{
+  "courseName":"Stray Kids舞台设计",
+  "courseCode":"SKZ002",
+  "teacherId":2,
+  "description":"研究Stray Kids舞台与MV设计"
+}
+
+###
+
+################################################
+# 6. 查询课程列表
+################################################
+
+GET http://localhost:8080/course/list
+token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInVzZXJJZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzgxNTI5NTMwLCJleHAiOjE3ODE2MTU5MzB9.MdPf-QA9xIDD58dlxVKRHKRCHu5ebQ0xV3pjjAcQ_uY
+
+
+###
+
+################################################
+# 7. 新增作业
+################################################
+
+POST http://localhost:8080/homework/add
+Content-Type: application/json
+token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiYW5nY2hhbiIsInVzZXJJZCI6Miwicm9sZSI6InRlYWNoZXIiLCJpYXQiOjE3ODE1MzYyNjcsImV4cCI6MTc4MTYyMjY2N30.h0QzD1Ss1rvtAcvNhrGSB0FrNYmZJej_p1rjsI-nSbc
+
+{
+  "title":"LALALALA舞台分析",
+  "content":"分析LALALALA舞台设计特点",
+  "courseId":1,
+  "teacherId":2,
+  "deadline":"2026-12-31T23:59:59"
+}
+
+###
+
+################################################
+# 8. 查询作业列表
+################################################
+
+GET http://localhost:8080/homework/list
+token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInVzZXJJZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzgxNTI5NTMwLCJleHAiOjE3ODE2MTU5MzB9.MdPf-QA9xIDD58dlxVKRHKRCHu5ebQ0xV3pjjAcQ_uY
+###
+
+################################################
+# 9. 提交作业（第一次）
+################################################
+
+POST http://localhost:8080/submit
+Content-Type: application/json
+token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJoeXVuamluIiwidXNlcklkIjo0LCJyb2xlIjoic3R1ZGVudCIsImlhdCI6MTc4MTUzNjMxMiwiZXhwIjoxNzgxNjIyNzEyfQ.yD3eItghj44I1RSkZO4yw64ZvTtWZ9WW1XAUlrHMuOk
+
+{
+  "homeworkId":1,
+  "submitContent":"已完成神菜单舞台分析报告"
+}
+
+###
+
+################################################
+# 10. 重复提交测试
+################################################
+
+POST http://localhost:8080/submit
+Content-Type: application/json
+token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJoeXVuamluIiwidXNlcklkIjo0LCJyb2xlIjoic3R1ZGVudCIsImlhdCI6MTc4MTUzNjMxMiwiZXhwIjoxNzgxNjIyNzEyfQ.yD3eItghj44I1RSkZO4yw64ZvTtWZ9WW1XAUlrHMuOk
+
+{
+  "homeworkId":1,
+  "submitContent":"第二次提交"
+}
+
+###
+
+
+################################################
+# 查看数据库中的作业
+################################################
+GET http://localhost:8080/homework/list
+token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInVzZXJJZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzgxNTI5NTMwLCJleHAiOjE3ODE2MTU5MzB9.MdPf-QA9xIDD58dlxVKRHKRCHu5ebQ0xV3pjjAcQ_uY
+###
+
+################################################
+# 教师批改作业
+################################################
+
+POST http://localhost:8080/score/grade
+Content-Type: application/json
+token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiYW5nY2hhbiIsInVzZXJJZCI6Miwicm9sZSI6InRlYWNoZXIiLCJpYXQiOjE3ODE1OTkwMjAsImV4cCI6MTc4MTY4NTQyMH0.Fb9DMhuOzKbmS4RdlubtN7JWEO3zVp8aKbWm3YFezxM
+
+{
+  "submitId":1,
+  "score":95,
+  "comment":"完成质量优秀"
+}
+
+###
+
+################################################
+# 重复批改测试
+################################################
+
+POST http://localhost:8080/score/grade
+Content-Type: application/json
+token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiYW5nY2hhbiIsInVzZXJJZCI6Miwicm9sZSI6InRlYWNoZXIiLCJpYXQiOjE3ODE1OTkwMjAsImV4cCI6MTc4MTY4NTQyMH0.Fb9DMhuOzKbmS4RdlubtN7JWEO3zVp8aKbWm3YFezxM
+
+{
+  "submitId":1,
+  "score":100,
+  "comment":"再次批改"
+}
+
+###
+
+################################################
+# 学生查看成绩
+################################################
+
+GET http://localhost:8080/score/my
+token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJoeXVuamluIiwidXNlcklkIjo0LCJyb2xlIjoic3R1ZGVudCIsImlhdCI6MTc4MTYxMzE2OCwiZXhwIjoxNzgxNjk5NTY4fQ.iasAGXwf1SYVkV8R1xiFDZokaMkqtC-RRT3L8fSGMBw
+
+###
+
+################################################
+# 课程统计
+################################################
+
+GET http://localhost:8080/course/statistics
+token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInVzZXJJZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzgxNjEzNDc2LCJleHAiOjE3ODE2OTk4NzZ9.E51Bo9Tmg8-4Gc04h9SjR7PphtHuGvGeILQdZsOf9tg
+###
