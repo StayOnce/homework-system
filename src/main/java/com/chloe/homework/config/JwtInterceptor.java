@@ -17,10 +17,17 @@ public class JwtInterceptor
             Object handler
     ) throws Exception {
 
+        // 放行预检请求
+        if ("OPTIONS".equalsIgnoreCase(
+                request.getMethod())) {
+
+            return true;
+        }
+
         String token =
                 request.getHeader("token");
 
-        if(token == null || token.isEmpty()) {
+        if (token == null || token.isEmpty()) {
 
             response.setStatus(401);
 
@@ -31,7 +38,7 @@ public class JwtInterceptor
                 JwtUtil.parseToken(token);
 
         Long userId =
-                ((Number)claims.get("userId"))
+                ((Number) claims.get("userId"))
                         .longValue();
 
         UserContext.setUserId(userId);
