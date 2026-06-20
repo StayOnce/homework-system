@@ -188,3 +188,15 @@ token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJoeXVuamluIiwidXNlcklkIjo0LCJyb2xlIjoic3R1
 GET http://localhost:8080/course/statistics
 token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInVzZXJJZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzgxNjEzNDc2LCJleHAiOjE3ODE2OTk4NzZ9.E51Bo9Tmg8-4Gc04h9SjR7PphtHuGvGeILQdZsOf9tg
 ###
+
+PUT http://localhost:8080/course
+token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInVzZXJJZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzgxOTY1MzU1LCJleHAiOjE3ODIwNTE3NTV9.kCYcLm8cN29gBjMy8XNcOB3rZY0zpnKi7oodntSUW5g
+Content-Type: application/json
+
+{
+  "id":1,
+  "courseName":"Stray Kids表演艺术",
+  "courseCode":"SKZ001",
+  "teacherId":2,
+  "description":"更新测试"
+}

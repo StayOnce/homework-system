@@ -17,4 +17,7 @@ public interface CourseMapper {
 
     List<CourseStatisticsVO> getStatistics();
 
+    int deleteById(Long id);
+
+    int update(Course course);
 }

@@ -24,4 +24,17 @@
 
     </select>
 
+    <select id="getTeacherList"
+            resultType="com.chloe.homework.entity.User">
+
+        select
+            id,
+            username,
+            real_name,
+            role
+        from user
+        where role = 'teacher'
+        order by id
+
+    </select>
 </mapper>

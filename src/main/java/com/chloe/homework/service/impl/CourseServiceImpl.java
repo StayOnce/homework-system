@@ -1,13 +1,14 @@
 package com.chloe.homework.service.impl;
 
 import com.chloe.homework.entity.Course;
+import com.chloe.homework.exception.BusinessException;
 import com.chloe.homework.mapper.CourseMapper;
 import com.chloe.homework.service.CourseService;
+import com.chloe.homework.utils.UserContext;
+import com.chloe.homework.vo.CourseStatisticsVO;
 import com.chloe.homework.vo.CourseVO;
-import com.chloe.homework.exception.BusinessException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import com.chloe.homework.vo.CourseStatisticsVO;
 
 import java.util.List;
 
@@ -33,10 +34,18 @@ public class CourseServiceImpl
                         course.getCourseCode()
                 );
 
-        if(exist != null){
+        if (exist != null) {
 
             throw new BusinessException(
                     "课程编号已存在"
+            );
+
+        }
+
+        if (course.getTeacherId() == null) {
+
+            throw new BusinessException(
+                    "请选择授课教师"
             );
 
         }
@@ -49,6 +58,20 @@ public class CourseServiceImpl
     public List<CourseStatisticsVO> statistics() {
 
         return courseMapper.getStatistics();
+
+    }
+
+    @Override
+    public void delete(Long id) {
+
+        courseMapper.deleteById(id);
+
+    }
+
+    @Override
+    public void update(Course course) {
+
+        courseMapper.update(course);
 
     }
 }

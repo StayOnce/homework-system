@@ -101,4 +101,30 @@
         order by c.id
 
     </select>
+
+    <delete id="deleteById">
+
+        delete
+        from course
+        where id = #{id}
+
+    </delete>
+
+    <update id="update">
+
+        update course
+
+        set
+
+            course_name = #{courseName},
+
+            course_code = #{courseCode},
+
+            teacher_id = #{teacherId},
+
+            description = #{description}
+
+        where id = #{id}
+
+    </update>
 </mapper>

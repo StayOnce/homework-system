@@ -11,24 +11,36 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl
+        implements UserService {
 
     private final UserMapper userMapper;
 
     @Override
-    public String login(String username,
-                        String password) {
+    public String login(
+            String username,
+            String password
+    ) {
 
-        User user = userMapper.login(username);
+        User user =
+                userMapper.login(username);
 
         if (user == null) {
-            throw new BusinessException("用户不存在");
+
+            throw new BusinessException(
+                    "用户不存在"
+            );
         }
 
         if (!user.getPassword().equals(password)) {
-            throw new BusinessException("密码错误");
+
+            throw new BusinessException(
+                    "密码错误"
+            );
         }
 
         return JwtUtil.createToken(
@@ -41,14 +53,27 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserInfoVO getCurrentUser() {
 
-        Long userId = UserContext.getUserId();
+        Long userId =
+                UserContext.getUserId();
 
-        User user = userMapper.findById(userId);
+        User user =
+                userMapper.findById(userId);
 
-        UserInfoVO vo = new UserInfoVO();
+        UserInfoVO vo =
+                new UserInfoVO();
 
-        BeanUtils.copyProperties(user, vo);
+        BeanUtils.copyProperties(
+                user,
+                vo
+        );
 
         return vo;
+    }
+
+    @Override
+    public List<User> getTeacherList() {
+
+        return userMapper.getTeacherList();
+
     }
 }

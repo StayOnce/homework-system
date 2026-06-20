@@ -43,4 +43,26 @@ public class CourseController {
         );
 
     }
+
+    @DeleteMapping("/{id}")
+    public Result<Void> delete(
+            @PathVariable Long id
+    ) {
+
+        courseService.delete(id);
+
+        return Result.success();
+
+    }
+
+    @PutMapping
+    public Result<Void> update(
+            @RequestBody Course course
+    ) {
+
+        courseService.update(course);
+
+        return Result.success();
+
+    }
 }

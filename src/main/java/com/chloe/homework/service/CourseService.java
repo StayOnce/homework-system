@@ -13,4 +13,8 @@ public interface CourseService {
     void add(Course course);
 
     List<CourseStatisticsVO> statistics();
+
+    void delete(Long id);
+
+    void update(Course course);
 }
