@@ -10,8 +10,10 @@ import com.chloe.homework.service.HomeworkSubmitService;
 import com.chloe.homework.utils.UserContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import com.chloe.homework.vo.HomeworkSubmitVO;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -85,5 +87,12 @@ public class HomeworkSubmitServiceImpl
         submitMapper.insert(
                 submit
         );
+    }
+
+    @Override
+    public List<HomeworkSubmitVO> list() {
+
+        return submitMapper.getSubmitList();
+
     }
 }

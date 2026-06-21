@@ -1,8 +1,11 @@
 package com.chloe.homework.mapper;
 
 import com.chloe.homework.entity.HomeworkSubmit;
+import com.chloe.homework.vo.HomeworkSubmitVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 @Mapper
 public interface HomeworkSubmitMapper {
@@ -22,4 +25,6 @@ public interface HomeworkSubmitMapper {
     );
 
     int countByHomeworkId(Long homeworkId);
+
+    List<HomeworkSubmitVO> getSubmitList();
 }

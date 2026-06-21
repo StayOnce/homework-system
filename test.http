@@ -222,3 +222,8 @@ token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInVzZXJJZCI6MSwicm9sZSI6ImFkbWlu
 
 DELETE http://localhost:8080/homework/1
 token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInVzZXJJZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzgyMDA4ODU4LCJleHAiOjE3ODIwOTUyNTh9._Y7wpVV2IGk3FfPRjL7tW-FmEVLDIhDB-t6ENCsF3g4
+###
+
+GET http://localhost:8080/submit/list
+token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInVzZXJJZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzgyMDA4ODU4LCJleHAiOjE3ODIwOTUyNTh9._Y7wpVV2IGk3FfPRjL7tW-FmEVLDIhDB-t6ENCsF3g4
+###

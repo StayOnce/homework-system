@@ -62,4 +62,42 @@
         where homework_id = #{homeworkId}
 
     </select>
+
+    <select id="getSubmitList"
+            resultType="com.chloe.homework.vo.HomeworkSubmitVO">
+
+        select
+            hs.id,
+
+            h.title as homework_title,
+
+            c.course_name,
+
+            u.real_name as student_name,
+
+            hs.submit_content,
+
+            hs.submit_time,
+
+            hs.grade_status,
+
+            sr.score
+
+        from homework_submit hs
+
+                 left join homework h
+                           on hs.homework_id = h.id
+
+                 left join course c
+                           on h.course_id = c.id
+
+                 left join user u
+                           on hs.student_id = u.id
+
+                 left join score_record sr
+                           on hs.id = sr.submit_id
+
+        order by hs.id desc
+
+    </select>
 </mapper>
