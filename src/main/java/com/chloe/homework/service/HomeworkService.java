@@ -11,4 +11,8 @@ public interface HomeworkService {
 
     List<HomeworkVO> list();
 
+    void update(Homework homework);
+
+    void delete(Long id);
+
 }

@@ -35,17 +35,33 @@
             resultType="com.chloe.homework.vo.HomeworkVO">
 
         select
-            h.id,
-            h.title,
-            c.course_name,
-            u.real_name as teacher_name,
-            h.deadline,
-            h.status
+
+            h.id                as id,
+
+            h.title             as title,
+
+            h.content           as content,
+
+            h.course_id         as courseId,
+
+            c.course_name       as courseName,
+
+            h.teacher_id        as teacherId,
+
+            u.real_name         as teacherName,
+
+            h.deadline          as deadline,
+
+            h.status            as status
+
         from homework h
+
                  left join course c
                            on h.course_id = c.id
+
                  left join user u
                            on h.teacher_id = u.id
+
         order by h.id desc
 
     </select>
@@ -59,5 +75,34 @@
 
     </select>
 
+    <update id="update">
+
+        update homework
+
+        <set>
+
+            title = #{title},
+
+            content = #{content},
+
+            course_id = #{courseId},
+
+            deadline = #{deadline},
+
+            status = #{status}
+
+        </set>
+
+        where id = #{id}
+
+    </update>
+
+    <delete id="deleteById">
+
+        delete
+        from homework
+        where id = #{id}
+
+    </delete>
 
 </mapper>

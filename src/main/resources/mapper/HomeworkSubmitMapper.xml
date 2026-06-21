@@ -53,4 +53,13 @@
         where id = #{id}
 
     </update>
+
+    <select id="countByHomeworkId"
+            resultType="java.lang.Integer">
+
+        select count(*)
+        from homework_submit
+        where homework_id = #{homeworkId}
+
+    </select>
 </mapper>

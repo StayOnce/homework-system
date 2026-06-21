@@ -200,3 +200,25 @@ Content-Type: application/json
   "teacherId":2,
   "description":"更新测试"
 }
+###
+
+GET http://localhost:8080/homework/list
+token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInVzZXJJZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzgyMDA4ODU4LCJleHAiOjE3ODIwOTUyNTh9._Y7wpVV2IGk3FfPRjL7tW-FmEVLDIhDB-t6ENCsF3g4
+###
+
+PUT http://localhost:8080/homework/update
+Content-Type: application/json
+token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInVzZXJJZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzgyMDA4ODU4LCJleHAiOjE3ODIwOTUyNTh9._Y7wpVV2IGk3FfPRjL7tW-FmEVLDIhDB-t6ENCsF3g4
+
+{
+"id":1,
+"title":"Stray Kids期末论文",
+"content":"分析SKZ舞台设计",
+"courseId":1,
+"deadline":"2026-07-01T23:59:59",
+"status":"进行中"
+}
+###
+
+DELETE http://localhost:8080/homework/1
+token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInVzZXJJZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzgyMDA4ODU4LCJleHAiOjE3ODIwOTUyNTh9._Y7wpVV2IGk3FfPRjL7tW-FmEVLDIhDB-t6ENCsF3g4

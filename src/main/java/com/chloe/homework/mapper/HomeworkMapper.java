@@ -3,6 +3,7 @@ package com.chloe.homework.mapper;
 import com.chloe.homework.entity.Homework;
 import com.chloe.homework.vo.HomeworkVO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -14,5 +15,9 @@ public interface HomeworkMapper {
     List<HomeworkVO> getHomeworkList();
 
     Homework findById(Long id);
+
+    int update(Homework homework);
+
+    int deleteById(Long id);
 
 }

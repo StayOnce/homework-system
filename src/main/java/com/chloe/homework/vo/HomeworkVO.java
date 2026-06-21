@@ -11,7 +11,13 @@ public class HomeworkVO {
 
     private String title;
 
+    private String content;
+
+    private Long courseId;
+
     private String courseName;
+
+    private Long teacherId;
 
     private String teacherName;
 

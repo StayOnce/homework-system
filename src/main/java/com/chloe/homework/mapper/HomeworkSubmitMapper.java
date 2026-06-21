@@ -21,4 +21,5 @@ public interface HomeworkSubmitMapper {
             @Param("gradeStatus") String gradeStatus
     );
 
+    int countByHomeworkId(Long homeworkId);
 }
