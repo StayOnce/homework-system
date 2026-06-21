@@ -15,8 +15,7 @@
             course_id,
             teacher_id,
             publish_time,
-            deadline,
-            status
+            deadline
         )
         values
             (
@@ -25,8 +24,7 @@
                 #{courseId},
                 #{teacherId},
                 #{publishTime},
-                #{deadline},
-                #{status}
+                #{deadline}
             )
 
     </insert>
@@ -50,9 +48,9 @@
 
             u.real_name         as teacherName,
 
-            h.deadline          as deadline,
+            h.publish_time      as publishTime,
 
-            h.status            as status
+            h.deadline          as deadline
 
         from homework h
 

@@ -17,17 +17,20 @@ public class JwtInterceptor
             Object handler
     ) throws Exception {
 
-        // 放行预检请求
         if ("OPTIONS".equalsIgnoreCase(
-                request.getMethod())) {
+                request.getMethod()
+        )) {
 
             return true;
         }
 
         String token =
-                request.getHeader("token");
+                request.getHeader(
+                        "token"
+                );
 
-        if (token == null || token.isEmpty()) {
+        if (token == null
+                || token.isEmpty()) {
 
             response.setStatus(401);
 
@@ -35,13 +38,27 @@ public class JwtInterceptor
         }
 
         Claims claims =
-                JwtUtil.parseToken(token);
+                JwtUtil.parseToken(
+                        token
+                );
 
         Long userId =
-                ((Number) claims.get("userId"))
-                        .longValue();
+                ((Number) claims.get(
+                        "userId"
+                )).longValue();
 
-        UserContext.setUserId(userId);
+        String role =
+                (String) claims.get(
+                        "role"
+                );
+
+        UserContext.setUserId(
+                userId
+        );
+
+        UserContext.setRole(
+                role
+        );
 
         return true;
     }

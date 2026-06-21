@@ -1,7 +1,4 @@
-################################################
 # 1. 管理员登录
-################################################
-
 POST http://localhost:8080/auth/login
 Content-Type: application/json
 
@@ -9,13 +6,9 @@ Content-Type: application/json
   "username":"admin",
   "password":"123456"
 }
-
 ###
 
-################################################
 # 2. 教师登录（Bang Chan）
-################################################
-
 POST http://localhost:8080/auth/login
 Content-Type: application/json
 
@@ -45,8 +38,7 @@ Content-Type: application/json
 ################################################
 
 GET http://localhost:8080/auth/info
-token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInVzZXJJZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzgxNTI5NTMwLCJleHAiOjE3ODE2MTU5MzB9.MdPf-QA9xIDD58dlxVKRHKRCHu5ebQ0xV3pjjAcQ_uY
-
+token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInVzZXJJZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzgyMDA4ODU4LCJleHAiOjE3ODIwOTUyNTh9._Y7wpVV2IGk3FfPRjL7tW-FmEVLDIhDB-t6ENCsF3g4
 ###
 
 ################################################

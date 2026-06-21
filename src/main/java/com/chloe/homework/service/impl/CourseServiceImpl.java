@@ -28,6 +28,16 @@ public class CourseServiceImpl
 
     @Override
     public void add(Course course) {
+        String role =
+                UserContext.getRole();
+
+        if(!"admin".equals(role)){
+
+            throw new BusinessException(
+                    "只有管理员可以新增课程"
+            );
+
+        }
 
         Course exist =
                 courseMapper.findByCode(
@@ -63,6 +73,16 @@ public class CourseServiceImpl
 
     @Override
     public void delete(Long id) {
+        String role =
+                UserContext.getRole();
+
+        if(!"admin".equals(role)){
+
+            throw new BusinessException(
+                    "只有管理员可以删除课程"
+            );
+
+        }
 
         courseMapper.deleteById(id);
 

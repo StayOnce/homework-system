@@ -1,6 +1,7 @@
 package com.chloe.homework.service.impl;
 
 import com.chloe.homework.entity.Homework;
+import com.chloe.homework.exception.BusinessException;
 import com.chloe.homework.mapper.HomeworkMapper;
 import com.chloe.homework.mapper.HomeworkSubmitMapper;
 import com.chloe.homework.service.HomeworkService;
@@ -8,7 +9,6 @@ import com.chloe.homework.utils.UserContext;
 import com.chloe.homework.vo.HomeworkVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import com.chloe.homework.exception.BusinessException;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -19,10 +19,21 @@ public class HomeworkServiceImpl
         implements HomeworkService {
 
     private final HomeworkMapper homeworkMapper;
+
     private final HomeworkSubmitMapper homeworkSubmitMapper;
 
     @Override
     public void add(Homework homework) {
+        String role =
+                UserContext.getRole();
+
+        if(!"teacher".equals(role)){
+
+            throw new BusinessException(
+                    "只有教师可以发布作业"
+            );
+
+        }
 
         homework.setTeacherId(
                 UserContext.getUserId()
@@ -31,14 +42,6 @@ public class HomeworkServiceImpl
         homework.setPublishTime(
                 LocalDateTime.now()
         );
-
-        if (homework.getStatus() == null) {
-
-            homework.setStatus(
-                    "进行中"
-            );
-
-        }
 
         homeworkMapper.insert(
                 homework
@@ -49,7 +52,41 @@ public class HomeworkServiceImpl
     @Override
     public List<HomeworkVO> list() {
 
-        return homeworkMapper.getHomeworkList();
+        List<HomeworkVO> list =
+                homeworkMapper.getHomeworkList();
+
+        LocalDateTime now =
+                LocalDateTime.now();
+
+        for (HomeworkVO vo : list) {
+
+            if (vo.getDeadline() == null) {
+
+                vo.setStatus(
+                        "未设置截止时间"
+                );
+
+            } else if (
+                    now.isBefore(
+                            vo.getDeadline()
+                    )
+            ) {
+
+                vo.setStatus(
+                        "进行中"
+                );
+
+            } else {
+
+                vo.setStatus(
+                        "已截止"
+                );
+
+            }
+
+        }
+
+        return list;
 
     }
 
@@ -69,7 +106,8 @@ public class HomeworkServiceImpl
                 homeworkSubmitMapper
                         .countByHomeworkId(id);
 
-        if(count > 0){
+        if (count != null
+                && count > 0) {
 
             throw new BusinessException(
                     "该作业已有学生提交记录，无法删除"
@@ -77,7 +115,9 @@ public class HomeworkServiceImpl
 
         }
 
-        homeworkMapper.deleteById(id);
+        homeworkMapper.deleteById(
+                id
+        );
 
     }
 

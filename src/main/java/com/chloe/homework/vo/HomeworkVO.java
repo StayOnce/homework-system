@@ -25,4 +25,5 @@ public class HomeworkVO {
 
     private String status;
 
+    private LocalDateTime publishTime;
 }
