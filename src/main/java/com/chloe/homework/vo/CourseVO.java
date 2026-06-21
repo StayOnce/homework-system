@@ -11,8 +11,9 @@ public class CourseVO {
 
     private String courseCode;
 
+    private Long teacherId;
+
     private String teacherName;
 
     private String description;
-
 }

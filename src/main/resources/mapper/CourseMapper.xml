@@ -10,12 +10,21 @@
             resultType="com.chloe.homework.vo.CourseVO">
 
         select
-            c.id,
-            c.course_name,
-            c.course_code,
-            u.real_name as teacher_name,
-            c.description
+
+            c.id                    as id,
+
+            c.course_name           as courseName,
+
+            c.course_code           as courseCode,
+
+            c.teacher_id            as teacherId,
+
+            u.real_name             as teacherName,
+
+            c.description           as description
+
         from course c
+
                  left join user u
                            on c.teacher_id = u.id
 
