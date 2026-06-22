@@ -61,4 +61,27 @@
 
     </select>
 
+    <select id="getPendingGrades"
+            resultType="com.chloe.homework.vo.ScoreVO">
+
+        select
+            hs.id as submitId,
+            h.title as homeworkTitle,
+            c.course_name as courseName,
+            u.real_name as studentName,
+            hs.submit_content as submitContent,
+            sr.score as score,
+            sr.comment as comment,
+            sr.grade_time as gradeTime,
+            hs.grade_status as gradeStatus
+        from homework_submit hs
+                 left join homework h on hs.homework_id = h.id
+                 left join course c on h.course_id = c.id
+                 left join user u on hs.student_id = u.id
+                 left join score_record sr on hs.id = sr.submit_id
+        where h.teacher_id = #{teacherId}
+        order by hs.id desc
+
+    </select>
+
 </mapper>

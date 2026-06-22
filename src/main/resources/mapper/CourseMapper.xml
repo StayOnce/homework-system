@@ -10,30 +10,20 @@
             resultType="com.chloe.homework.vo.CourseVO">
 
         select
-
             c.id                    as id,
-
             c.course_name           as courseName,
-
             c.course_code           as courseCode,
-
             c.teacher_id            as teacherId,
-
             u.real_name             as teacherName,
-
             c.description           as description
-
         from course c
-
                  left join user u
                            on c.teacher_id = u.id
-
         order by c.id desc
 
     </select>
 
     <insert id="insert">
-
         insert into course
         (
             course_name,
@@ -60,27 +50,27 @@
 
     </select>
 
+    <select id="getCourseIdsByStudentId"
+            resultType="java.lang.Long">
+        select course_id
+        from user_course
+        where user_id = #{studentId}
+    </select>
+
     <select id="getStatistics"
             resultType="com.chloe.homework.vo.CourseStatisticsVO">
 
         select
-
             c.id as courseId,
-
             c.course_name as courseName,
-
             count(distinct uc.user_id) as studentCount,
-
             count(distinct hs.student_id) as submitCount,
-
             (
                 count(distinct uc.user_id)
                     -
                 count(distinct hs.student_id)
                 ) as unSubmitCount,
-
             round(avg(sr.score),2) as averageScore,
-
             round(
                     count(distinct hs.student_id)
                         /
@@ -88,26 +78,73 @@
                         *100,
                     2
             ) as completeRate
-
         from course c
-
                  left join user_course uc
                            on c.id = uc.course_id
-
                  left join homework h
                            on c.id = h.course_id
-
                  left join homework_submit hs
                            on h.id = hs.homework_id
-
                  left join score_record sr
                            on hs.id = sr.submit_id
-
         group by
             c.id,
             c.course_name
-
         order by c.id
+    </select>
+
+    <select id="getStatisticsByTeacherId"
+            resultType="com.chloe.homework.vo.CourseStatisticsVO">
+
+        select
+            c.id as courseId,
+            c.course_name as courseName,
+            count(distinct uc.user_id) as studentCount,
+            count(distinct hs.student_id) as submitCount,
+            (count(distinct uc.user_id) - count(distinct hs.student_id)) as unSubmitCount,
+            round(avg(sr.score),2) as averageScore,
+            round(count(distinct hs.student_id) / count(distinct uc.user_id) * 100, 2) as completeRate
+        from course c
+                 left join user_course uc on c.id = uc.course_id
+                 left join homework h on c.id = h.course_id
+                 left join homework_submit hs on h.id = hs.homework_id
+                 left join score_record sr on hs.id = sr.submit_id
+        where c.teacher_id = #{teacherId}
+        group by c.id, c.course_name
+        order by c.id
+
+    </select>
+
+    <select id="getTotalCount"
+            resultType="java.lang.Integer">
+
+        select count(*) from course
+
+    </select>
+
+    <select id="getCourseCountByTeacherId"
+            resultType="java.lang.Integer">
+
+        select count(*) from course where teacher_id = #{teacherId}
+
+    </select>
+
+    <select id="getCourseCountByStudentId"
+            resultType="java.lang.Integer">
+
+        select count(distinct course_id)
+        from user_course
+        where user_id = #{studentId}
+
+    </select>
+
+    <select id="getStudentCountByTeacherId"
+            resultType="java.lang.Integer">
+
+        select count(distinct uc.user_id)
+        from course c
+                 left join user_course uc on c.id = uc.course_id
+        where c.teacher_id = #{teacherId}
 
     </select>
 

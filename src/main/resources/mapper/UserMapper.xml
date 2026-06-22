@@ -37,4 +37,70 @@
         order by id
 
     </select>
+
+    <select id="getStudentCount"
+            resultType="java.lang.Integer">
+
+        select count(*)
+        from user
+        where role = 'student'
+
+    </select>
+
+    <select id="getStudentList"
+            resultType="com.chloe.homework.entity.User">
+
+        select
+            id,
+            username,
+            real_name as realName,
+            role
+        from user
+        where role = 'student'
+        order by id
+
+    </select>
+
+    <select id="getUserList"
+            resultType="com.chloe.homework.entity.User">
+
+        select
+            id,
+            username,
+            real_name as realName,
+            role
+        from user
+        order by id desc
+
+    </select>
+
+    <insert id="insert"
+            useGeneratedKeys="true"
+            keyProperty="id">
+
+        insert into user (username, password, real_name, role)
+        values (#{username}, #{password}, #{realName}, #{role})
+
+    </insert>
+
+    <update id="update">
+
+        update user
+        set
+            username = #{username},
+            real_name = #{realName},
+            role = #{role}
+        <if test="password != null and password != ''">
+            , password = #{password}
+        </if>
+        where id = #{id}
+
+    </update>
+
+    <delete id="deleteById">
+
+        delete from user where id = #{id}
+
+    </delete>
+
 </mapper>

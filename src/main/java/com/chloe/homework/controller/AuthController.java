@@ -14,35 +14,21 @@ import java.util.List;
 @RequestMapping("/auth")
 @RequiredArgsConstructor
 public class AuthController {
-
     private final UserService userService;
 
     @PostMapping("/login")
-    public Result<String> login(
-            @RequestBody LoginDTO dto) {
-
-        String token =
-                userService.login(
-                        dto.getUsername(),
-                        dto.getPassword()
-                );
-
+    public Result<String> login(@RequestBody LoginDTO dto) {
+        String token = userService.login(dto.getUsername(), dto.getPassword());
         return Result.success(token);
     }
 
     @GetMapping("/info")
     public Result<UserInfoVO> info() {
-
-        return Result.success(
-                userService.getCurrentUser()
-        );
+        return Result.success(userService.getCurrentUser());
     }
 
     @GetMapping("/teacher/list")
     public Result<List<User>> teacherList() {
-
-        return Result.success(
-                userService.getTeacherList()
-        );
+        return Result.success(userService.getTeacherList());
     }
 }

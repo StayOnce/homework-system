@@ -8,11 +8,8 @@ import java.util.List;
 
 @Mapper
 public interface ScoreRecordMapper {
-
     int insert(ScoreRecord scoreRecord);
-
     ScoreRecord findBySubmitId(Long submitId);
-
     List<ScoreVO> getMyScores(Long studentId);
-
+    List<ScoreVO> getPendingGrades(Long teacherId);
 }

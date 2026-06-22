@@ -13,24 +13,16 @@ import java.util.List;
 @RequestMapping("/submit")
 @RequiredArgsConstructor
 public class HomeworkSubmitController {
-
     private final HomeworkSubmitService submitService;
 
     @PostMapping
-    public Result<Void> submit(
-            @RequestBody SubmitDTO dto) {
-
+    public Result<Void> submit(@RequestBody SubmitDTO dto) {
         submitService.submit(dto);
-
         return Result.success();
     }
 
     @GetMapping("/list")
-    public Result<List<HomeworkSubmitVO>> list(){
-
-        return Result.success(
-                submitService.list()
-        );
-
+    public Result<List<HomeworkSubmitVO>> list() {
+        return Result.success(submitService.list());
     }
 }

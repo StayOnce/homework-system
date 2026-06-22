@@ -12,24 +12,22 @@ import java.util.List;
 @RequestMapping("/score")
 @RequiredArgsConstructor
 public class ScoreController {
-
     private final ScoreService scoreService;
 
     @PostMapping("/grade")
-    public Result<Void> grade(
-            @RequestBody GradeDTO dto) {
-
+    public Result<Void> grade(@RequestBody GradeDTO dto) {
         scoreService.grade(dto);
-
         return Result.success();
     }
 
     @GetMapping("/my")
     public Result<List<ScoreVO>> myScores() {
+        return Result.success(scoreService.myScores());
+    }
 
-        return Result.success(
-                scoreService.myScores()
-        );
+    @GetMapping("/pending")
+    public Result<List<ScoreVO>> pendingGrades() {
+        return Result.success(scoreService.getPendingGrades());
     }
 }
 

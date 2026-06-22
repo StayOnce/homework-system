@@ -100,4 +100,113 @@
         order by hs.id desc
 
     </select>
+
+    <select id="getSubmitListByStudentId"
+            resultType="com.chloe.homework.vo.HomeworkSubmitVO">
+
+        select
+            hs.id,
+            h.title as homework_title,
+            c.course_name,
+            u.real_name as student_name,
+            hs.submit_content,
+            hs.submit_time,
+            hs.grade_status,
+            sr.score
+        from homework_submit hs
+                 left join homework h on hs.homework_id = h.id
+                 left join course c on h.course_id = c.id
+                 left join user u on hs.student_id = u.id
+                 left join score_record sr on hs.id = sr.submit_id
+        where hs.student_id = #{studentId}
+        order by hs.id desc
+
+    </select>
+
+    <select id="getSubmitListByTeacherId"
+            resultType="com.chloe.homework.vo.HomeworkSubmitVO">
+
+        select
+            hs.id,
+            h.title as homework_title,
+            c.course_name,
+            u.real_name as student_name,
+            hs.submit_content,
+            hs.submit_time,
+            hs.grade_status,
+            sr.score
+        from homework_submit hs
+                 left join homework h on hs.homework_id = h.id
+                 left join course c on h.course_id = c.id
+                 left join user u on hs.student_id = u.id
+                 left join score_record sr on hs.id = sr.submit_id
+        where h.teacher_id = #{teacherId}
+        order by hs.id desc
+
+    </select>
+
+    <select id="getTotalCount"
+            resultType="java.lang.Integer">
+
+        select count(*) from homework_submit
+
+    </select>
+
+    <select id="getSubmitCountByTeacherId"
+            resultType="java.lang.Integer">
+
+        select count(*)
+        from homework_submit hs
+                 left join homework h on hs.homework_id = h.id
+        where h.teacher_id = #{teacherId}
+
+    </select>
+
+    <select id="getSubmitCountByStudentId"
+            resultType="java.lang.Integer">
+
+        select count(*) from homework_submit where student_id = #{studentId}
+
+    </select>
+
+    <select id="getAverageScore"
+            resultType="java.lang.Double">
+
+        select avg(sr.score)
+        from score_record sr
+
+    </select>
+
+    <select id="getAverageScoreByTeacherId"
+            resultType="java.lang.Double">
+
+        select avg(sr.score)
+        from score_record sr
+                 left join homework_submit hs on sr.submit_id = hs.id
+                 left join homework h on hs.homework_id = h.id
+        where h.teacher_id = #{teacherId}
+
+    </select>
+
+    <select id="getAverageScoreByStudentId"
+            resultType="java.lang.Double">
+
+        select avg(sr.score)
+        from score_record sr
+                 left join homework_submit hs on sr.submit_id = hs.id
+        where hs.student_id = #{studentId}
+
+    </select>
+
+    <select id="getPendingGradeCountByTeacherId"
+            resultType="java.lang.Integer">
+
+        select count(*)
+        from homework_submit hs
+                 left join homework h on hs.homework_id = h.id
+        where h.teacher_id = #{teacherId}
+          and hs.grade_status = 'UN_GRADED'
+
+    </select>
+
 </mapper>

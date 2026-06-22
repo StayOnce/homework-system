@@ -64,6 +64,51 @@
 
     </select>
 
+    <select id="getHomeworkListByTeacherId"
+            resultType="com.chloe.homework.vo.HomeworkVO">
+
+        select
+            h.id                as id,
+            h.title             as title,
+            h.content           as content,
+            h.course_id         as courseId,
+            c.course_name       as courseName,
+            h.teacher_id        as teacherId,
+            u.real_name         as teacherName,
+            h.publish_time      as publishTime,
+            h.deadline          as deadline
+        from homework h
+                 left join course c on h.course_id = c.id
+                 left join user u on h.teacher_id = u.id
+        where h.teacher_id = #{teacherId}
+        order by h.id desc
+
+    </select>
+
+    <select id="getHomeworkListByCourseIds"
+            resultType="com.chloe.homework.vo.HomeworkVO">
+
+        select
+            h.id                as id,
+            h.title             as title,
+            h.content           as content,
+            h.course_id         as courseId,
+            c.course_name       as courseName,
+            h.teacher_id        as teacherId,
+            u.real_name         as teacherName,
+            h.publish_time      as publishTime,
+            h.deadline          as deadline
+        from homework h
+                 left join course c on h.course_id = c.id
+                 left join user u on h.teacher_id = u.id
+        where h.course_id in
+        <foreach collection="courseIds" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        order by h.id desc
+
+    </select>
+
     <select id="findById"
             resultType="com.chloe.homework.entity.Homework">
 
@@ -83,8 +128,6 @@
 
             content = #{content},
 
-            course_id = #{courseId},
-
             deadline = #{deadline},
 
             status = #{status}
@@ -102,5 +145,42 @@
         where id = #{id}
 
     </delete>
+
+    <select id="getTotalCount"
+            resultType="java.lang.Integer">
+
+        select count(*) from homework
+
+    </select>
+
+    <select id="getHomeworkCountByTeacherId"
+            resultType="java.lang.Integer">
+
+        select count(*) from homework where teacher_id = #{teacherId}
+
+    </select>
+
+    <select id="getHomeworkCountByStudentId"
+            resultType="java.lang.Integer">
+
+        select count(*)
+        from homework h
+                 left join user_course uc on h.course_id = uc.course_id
+        where uc.user_id = #{studentId}
+
+    </select>
+
+    <select id="getPendingSubmitCountByStudentId"
+            resultType="java.lang.Integer">
+
+        select count(*)
+        from homework h
+                 left join user_course uc on h.course_id = uc.course_id
+                 left join homework_submit hs on h.id = hs.homework_id and hs.student_id = #{studentId}
+        where uc.user_id = #{studentId}
+          and h.deadline > #{now}
+          and hs.id is null
+
+    </select>
 
 </mapper>

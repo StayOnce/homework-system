@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.chloe.homework.mapper.UserCourseMapper">
+
+    <select id="getStudentsByCourseId"
+            resultType="com.chloe.homework.entity.User">
+
+        select
+            u.id,
+            u.username,
+            u.real_name as realName,
+            u.role
+        from user u
+                 inner join user_course uc on u.id = uc.user_id
+        where uc.course_id = #{courseId}
+          and u.role = 'student'
+        order by u.id
+
+    </select>
+
+    <select id="getUnassignedStudents"
+            resultType="com.chloe.homework.entity.User">
+
+        select
+            u.id,
+            u.username,
+            u.real_name as realName,
+            u.role
+        from user u
+        where u.role = 'student'
+          and u.id not in (
+            select user_id from user_course where course_id = #{courseId}
+        )
+        order by u.id
+
+    </select>
+
+    <select id="getStudentIdsByCourseId"
+            resultType="java.lang.Long">
+
+        select user_id
+        from user_course
+        where course_id = #{courseId}
+
+    </select>
+
+    <insert id="addStudentToCourse">
+
+        insert into user_course (user_id, course_id)
+        values (#{studentId}, #{courseId})
+
+    </insert>
+
+    <delete id="removeStudentFromCourse">
+
+        delete from user_course
+        where user_id = #{studentId}
+          and course_id = #{courseId}
+
+    </delete>
+
+</mapper>
